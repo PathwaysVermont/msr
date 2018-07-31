@@ -1,6 +1,6 @@
 import csv
 
-month = '02'
+month = '06'
 
 crt_profile_file = 'crtprofile%s18.csv' % month
 crt_services_file = 'crtservices%s18.csv' % month
