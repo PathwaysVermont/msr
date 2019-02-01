@@ -9,8 +9,8 @@ def make_msr():
     pass
 
 if __name__ == '__main__':
-    month = '10' #raw_input("What month is this reporting on? (01-12) > ")
-    year = '18' #raw_input("What year is this reporting on? (use last two digits of year, e.g. 19) > ")
+    month = raw_input("What month is this reporting on? (01-12) > ")
+    year = raw_input("What year is this reporting on? (use last two digits of year, e.g. 19) > ")
 
     base_path = sys.path[0]
     print(base_path)
