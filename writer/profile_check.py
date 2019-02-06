@@ -41,15 +41,34 @@ def dx_check(profiles_list):
             name = "{}, {}".format(profile[78], profile[76])
             list.append(name)
     return list
+def print_check(crtprofile, ffsprofile):
+
+    print("\n")
+    print("#########################")
+    print("Profile Attribute Testing")
+    print("#########################")
+    print("\n")
+    print("People appearing multiple times:")
+    print("Within CRT: {}".format(internal_duplicate_check(crtprofile)))
+    print("Within FFS: {}".format(internal_duplicate_check(ffsprofile)))
+    print("Across programs: {}".format(cross_prog_duplicate_check(crtprofile, ffsprofile)))
+    print("\n")
+    print("People Missing a Medicaid Billing Number:")
+    print("Within CRT: {}".format(medicaid_number_check(crtprofile)))
+    print("Within FFS: {}".format(medicaid_number_check(ffsprofile)))
+    print("\n")
+    print("People Missing a Dx:")
+    print("Within CRT: {}".format(dx_check(crtprofile)))
+    print("Within FFS: {}".format(dx_check(ffsprofile)))
 
 if __name__ == '__main__':
     import msr_files
     crt_profiles = msr_files.profiles_crop('crtprofile1018.csv','crtservices1018.csv')
     ffs_profiles = msr_files.profiles_crop('ffsprofile1018.csv','ffsservices1018.csv')
 
-    print("\n\n")
+    print("\n")
     print("#########################")
-    print("Profile Attribute Testing")
+    print("Profile Attribute Check")
     print("#########################")
     print("\n")
     print("People appearing multiple times:")
