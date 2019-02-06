@@ -124,7 +124,7 @@ def error_logger(x,y):
 def msr_file(profile_list, services_list, primary_prog, begindate, enddate, output_file):
     for x in profile_list:
         name = "%s, %s" % (x[78],x[76])
-    	print(name)
+    	#print(name)
 
     	error_init(name)
     	error_count = 0

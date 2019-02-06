@@ -3,9 +3,36 @@ import writer.file_writer as file_writer
 import writer.msr_files as msr_files
 import writer.profile_check as profile_check
 
+def exclude(profile_list, services_list, prog):
+    for profile in profile_list:
+        name = "{}, {}".format(profile[78], profile[76])
+        if name in profile_check.dx_check(profile_list):
+            profile_list.remove(profile)
+            service_count = 0
+            service_time = 0
+            for service in services_list:
+                if name == service[13]:
+                    service_count += 1
+                    service_time += int(service[5])
+            print("{} ({}): no Dx - {} services, {} minutes".format(name, prog, service_count, service_time))
+        if name in profile_check.medicaid_number_check(profile_list):
+            profile_list.remove(profile)
+            service_count = 0
+            service_time = 0
+            for service in services_list:
+                if name == service[13]:
+                    service_count += 1
+                    service_time += int(service[5])
+            print("{} ({}): no medicaid number - {} services, {} minutes".format(name, prog, service_count, service_time))
+
 def make_msr(crt_profile, ffs_profile, crt_services, ffs_services, month, year):
     begindate = "{}{}01".format(year, month)
     enddate = "{}{}{}".format(year, month, file_writer.month_last_day[month])
+
+    print("\n")
+    print("Service Recipient Records Removed:")
+    exclude(crt_profile, crt_services, "CRT")
+    exclude(ffs_profile, ffs_services, "FFS")
 
     output_file_name = "PW{}{}ms.dat".format(year, month)
     filepath = os.path.join(sys.path[0], 'output_files', output_file_name)
