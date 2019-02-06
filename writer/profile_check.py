@@ -1,5 +1,6 @@
 import collections
 import icd_code_list
+from town_code import town_code
 
 def internal_duplicate_check(profiles_list):
     names = []
@@ -41,6 +42,17 @@ def dx_check(profiles_list):
             name = "{}, {}".format(profile[78], profile[76])
             list.append(name)
     return list
+
+def town_code_check(crt_profiles, ffs_profiles):
+    list = []
+    for profile in crt_profiles:
+        if profile[85].upper() not in town_code:
+            list.append(profile[85])
+    for profile in ffs_profiles:
+        if profile[85].upper() not in town_code:
+            list.append(profile[85])
+    return list
+
 def print_check(crtprofile, ffsprofile):
 
     print("\n")
@@ -60,6 +72,10 @@ def print_check(crtprofile, ffsprofile):
     print("People Missing a Dx:")
     print("Within CRT: {}".format(dx_check(crtprofile)))
     print("Within FFS: {}".format(dx_check(ffsprofile)))
+    print("\n")
+    print("Missing Town Codes")
+    print("Towns: {}".format(town_code_check(crtprofile, ffsprofile)))
+
 
 if __name__ == '__main__':
     import msr_files
