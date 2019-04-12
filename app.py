@@ -5,7 +5,14 @@ import writer.profile_check as profile_check
 
 def exclude(profile_list, services_list, prog):
     for profile in profile_list:
+        id = profile[1]
+        if id == '100205918': #Erroneous client # ID
+            profile_list.remove(profile)
+
+    for profile in profile_list:
+
         name = "{}, {}".format(profile[78], profile[76])
+
         if name in profile_check.dx_check(profile_list):
             profile_list.remove(profile)
             service_count = 0
@@ -16,7 +23,10 @@ def exclude(profile_list, services_list, prog):
                     service_time += int(service[5])
             print("{} ({}): no Dx - {} services, {} minutes".format(name, prog, service_count, service_time))
         if name in profile_check.medicaid_number_check(profile_list):
-            profile_list.remove(profile)
+            try:
+                profile_list.remove(profile)
+            except:
+                print("Couldn't remove {}".format(name))
             service_count = 0
             service_time = 0
             for service in services_list:
@@ -39,7 +49,7 @@ def make_msr(crt_profile, ffs_profile, crt_services, ffs_services, month, year):
     output_file = open(filepath, 'w')
 
     file_writer.msr_file(crt_profile, crt_services, "1", begindate, enddate, output_file)
-    file_writer.msr_file(ffs_profile, ffs_services, "2", begindate, begindate, output_file)
+    file_writer.msr_file(ffs_profile, ffs_services, "2", begindate, enddate, output_file)
 
     output_file.close()
     print("\nMSR file has been written. You can find it in {}".format(os.path.join(sys.path[0], 'output_files')))
